@@ -25,9 +25,9 @@ class NReinas {
         while (fila > 0) {
             if (columna[fila] < n) {
                 columna[fila] += 1
-                if (nodoValido(fila)) {
+                if (esValido(fila)) {
                     if (fila == n) {
-                        tratarSolucion()
+                        agregarSolucion()
                     } else {
                         fila += 1
                         columna[fila] = 0
@@ -53,7 +53,7 @@ class NReinas {
         return tablero.map { it.toString() }
     }
 
-    private fun nodoValido(fila: Int): Boolean {
+    private fun esValido(fila: Int): Boolean {
         for (f in 1 until fila) {
             if (columna[f] == columna[fila] || (f - columna[f] == fila - columna[fila]) || (f + columna[f] == fila + columna[fila])) {
                 return false
@@ -62,7 +62,7 @@ class NReinas {
         return true
     }
 
-    private fun tratarSolucion() {
+    private fun agregarSolucion() {
         soluciones.add(columna.copyOfRange(1, columna.size).toList())
     }
 }

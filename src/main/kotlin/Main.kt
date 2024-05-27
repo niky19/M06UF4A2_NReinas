@@ -14,11 +14,11 @@ fun main() {
 
 class NReinas {
     private var soluciones: MutableList<List<Int>> = mutableListOf()
-    private var columna: IntArray = IntArray(0)
+    private var columna: MutableList<Int> = mutableListOf()
 
     fun buscarSoluciones(n: Int) {
         soluciones.clear()
-        columna = IntArray(n + 1)
+        columna = MutableList(n + 1) { 0 }
         var fila = 1
         columna[fila] = 0
 
@@ -46,11 +46,11 @@ class NReinas {
     fun visualizaSolucion(numeroSolucion: Int): List<String> {
         val solucion = soluciones[numeroSolucion]
         val n = solucion.size
-        val tablero = MutableList(n) { CharArray(n) { '.' } }
+        val tablero = MutableList(n) { MutableList(n) { '.' } }
         for (i in solucion.indices) {
             tablero[i][solucion[i] - 1] = 'Q'
         }
-        return tablero.map { it.toString() }
+        return tablero.map { it.joinToString("") } // Imprime el tablero en string separado por espacios
     }
 
     private fun esValido(fila: Int): Boolean {
@@ -63,6 +63,6 @@ class NReinas {
     }
 
     private fun agregarSolucion() {
-        soluciones.add(columna.copyOfRange(1, columna.size).toList())
+        soluciones.add(columna.subList(1, columna.size))
     }
 }

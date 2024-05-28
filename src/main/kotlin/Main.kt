@@ -102,7 +102,7 @@ class SolucionadorReines {
         this.midaTauler = midaTauler
 
         // Cridem al mètode resol per trobar les solucions
-        resol()
+        resol(trobaUna)
     }
 
     // Busca totes les solucions possibles al problema de les reines en un tauler de mida midaTauler fen servir backtracking.
@@ -115,7 +115,7 @@ class SolucionadorReines {
         this.columna[fila] = 0
         this.midaTauler = midaTauler
 
-        resol()
+        resol(trobaUna)
     }
 
     // Compta el nombre de solucions trobades
@@ -129,7 +129,8 @@ class SolucionadorReines {
     }
 
     //Aquesta funció és la que s'encarrega de trobar les solucions al problema de les reines
-    private fun resol() {
+    private fun resol(trobaUna: Boolean) {
+        val esTrobada = false
         while (fila > 0) {
             //Si la fila actual és menor que la mida del tauler, incrementem la columna de la fila actual
             if (columna[fila] < midaTauler) {
@@ -164,18 +165,27 @@ class SolucionadorReines {
 
     //Tractem la solució trobada, afegint-la a la llista de solucions i incrementant el nombre de solucions trobades
     private fun tractaSolucio(columna: IntArray) {
-        var solucio = ""
-        for (f in 1..midaTauler) {
-            solucio += "Reina $f / fila $f / columna${columna[f]}\n"
+        val builder = StringBuilder()
+        for (fila in 1..midaTauler) {
+            for (col in 1..midaTauler) {
+                if (col == columna[fila]) {
+                    builder.append("Q ")
+                } else {
+                    builder.append(". ")
+                }
+            }
+            builder.append("\n")
         }
+        val solucio = builder.toString()
         this.solucions.add(solucio)
         this.numSolucions++
 
-        //Si trobaUna és true, sortim del bucle
+        // Si trobaUna és true, sortim del bucle
         if (this.trobaUna) {
             this.trobaUna = false
         }
     }
+
 
     //Reinicia les variables de classe
     private fun reinicia() {
